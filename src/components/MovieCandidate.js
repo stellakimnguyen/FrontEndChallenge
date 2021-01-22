@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import styled from 'styled-components';
 
 class MovieCandidate extends Component {
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
         <Container>
-            <MovieInfo>{this.props.title}</MovieInfo>
+            <MovieInfo>{this.props.title} | {this.props.year}</MovieInfo>
             <NominateButton>nominate</NominateButton>
         </Container>
     );
@@ -53,6 +56,7 @@ const NominateButton = styled.button `
 
 MovieCandidate.propTypes = {
   title: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
 };
 
 export default MovieCandidate;

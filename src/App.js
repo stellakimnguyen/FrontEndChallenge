@@ -9,32 +9,44 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   testTestTest,
-    // }
-  }
+    this.state = {
+      searchResults: {},
+    }
 
-  test(event) {
-    console.log(event.target.value);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleKeyPress = (event) => {
+    let _this = this; // scope of *this* not available in callback for AJAX request
     if(event.key === 'Enter'){
-      console.log('enter press here! ')
-      console.log(event.target.value);
       $.getJSON(`http://www.omdbapi.com/?i=tt3896198&apikey=cb6b4a03&s=${event.target.value}`, function(movieResults) {
         // JSON result in `data` variable
-        // this.setState({testTestTest: movieResults});
-        var test = JSON.stringify(movieResults);
-        console.log(test);
+        _this.setState({ searchResults: movieResults });
       });
     }
   }
 
   render() {
-    // const testTest = this.state.testTestTest.forEach(function(data, index) {
+    // const testTest = this.state.searchResults.forEach(function(data, index) {
     //   console.log(data);
     // });
+    console.log(this.state.searchResults.Response);
+
+    let results = <div></div>;
+
+    if (this.state.searchResults.Response === 'True') {
+      // results = this.state.searchResults.Search.forEach(function(data, index) {
+      //   <MovieCandidate title={data.Title} year={data.Year} />
+      // });
+
+      results = this.state.searchResults.Search.map((movie, index) => {
+        return (
+          <MovieCandidate key={index} title={movie.Title} year={movie.Year} />
+        );
+      });
+    } else {
+      results = <div>No results found. Please try again.</div>
+    }
 
     return (
       <Container>
@@ -47,17 +59,7 @@ class App extends Component {
           <Results>
             <Subtitle>Results</Subtitle>
             <FilteredMovies>
-              <MovieCandidate title="test0" />
-              <MovieCandidate title="test1" />
-              <MovieCandidate title="test2" />
-              <MovieCandidate title="test3" />
-              <MovieCandidate title="test4" />
-              <MovieCandidate title="test5" />
-              <MovieCandidate title="test6" />
-              <MovieCandidate title="test7" />
-              <MovieCandidate title="test8" />
-              <MovieCandidate title="test9" />
-              <MovieCandidate title="test10" />
+              {results}
             </FilteredMovies>
           </Results>
         </ResultsContainer>
