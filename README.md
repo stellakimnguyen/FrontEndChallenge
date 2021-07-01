@@ -1,6 +1,13 @@
+# Movie Award
+Web app to nominate your five top movies
 
-# Front End Challenge
-Front-End Internship Application Challenge
+## Features
+- Search the OMDB database for movies to nominate
+- Nominate five movies
+- Edit the nominations
+
+### Features to Come
+- Send nominations to friends and family
 
 ## Run the application
 1. Clone the repository.
